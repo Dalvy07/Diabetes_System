@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +47,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Связь 1:1 с Doctor
+    public function doctor()
+    {
+        // hasOne: в таблице doctors есть user_id, связанный с этой записью
+        return $this->hasOne(Doctor::class, 'user_id');
+    }
+
+    // Связь 1:1 с Patient
+    public function patient()
+    {
+        return $this->hasOne(Patient::class, 'user_id');
     }
 }
