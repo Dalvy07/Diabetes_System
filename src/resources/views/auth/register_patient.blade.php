@@ -51,10 +51,9 @@
     <div>
         <label>Пол:</label>
         <select name="gender">
-            <option value="">Выбрать...</option>
+{{--            <option value="">Выбрать...</option>--}}
             <option value="male"   @if(old('gender')==='male') selected @endif>Мужской</option>
             <option value="female" @if(old('gender')==='female') selected @endif>Женский</option>
-            <option value="other"  @if(old('gender')==='other') selected @endif>Другое</option>
         </select>
     </div>
 

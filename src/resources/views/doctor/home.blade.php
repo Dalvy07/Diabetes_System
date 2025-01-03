@@ -29,6 +29,12 @@
 
 <hr>
 
+<form method="POST" action="{{ route('account.delete') }}" onsubmit="return confirm('Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.')">
+    @csrf
+    @method('DELETE')
+    <button type="submit" style="color: red;">Удалить аккаунт</button>
+</form>
+
 <p>
     <a href="{{ route('logout') }}"
        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
