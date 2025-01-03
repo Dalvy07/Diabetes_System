@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Общие стили */
+body {
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8;
+    color: #333;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Стили для абзацев */
+p {
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif; /* Кастомный шрифт */
+    font-size: 1.1rem; /* Увеличиваем размер текста */
+    color: #6b7280; /* Более мягкий цвет текста */
+    line-height: 1.6; /* Увеличиваем межстрочный интервал для читаемости */
+    margin: 0.5rem 0; /* Добавляем отступы сверху и снизу */
+    text-align: center; /* Центрируем текст */
+}
+
+
+/* Навигация */
+.navbar {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e6e6e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li {
+    position: relative;
+    margin: 0 1rem;
+}
+
+.navbar-menu a {
+    color: #3b82f6;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-menu a:hover {
+    background-color: #e5f0ff;
+    color: #1d4ed8;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: #3b82f6;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #e5f0ff;
+    color: #1d4ed8;
+}
+
+/* Выпадающее меню */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    list-style: none;
+    padding: 0.5rem 0;
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    margin: 0;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border-radius: 0;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f4f8;
+    color: #1d4ed8;
+}
+
+/* Основной контент */
+.main-content {
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 800px;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    color: #1d4ed8;
+    margin-bottom: 1rem;
+}
+
+.main-content h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #1d4ed8;
+    margin-bottom: 1rem;
+}
+
+.main-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-content ul li {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Карусель */
+.carousel {
+    position: relative;
+    max-width: 90%;
+    margin: 2rem auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide img {
+    width: 100%;
+    display: block;
+    border-radius: 20px;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #3b82f6;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    z-index: 10;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+.carousel-button:hover {
+    background-color: #1d4ed8;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+/* Футер */
+footer {
+    background-color: #ffffff;
+    color: #6b7280;
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid #e6e6e6;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
