@@ -1,7 +1,26 @@
-@extends('layouts.layout')
+@extends('layouts.layout_basic')
 
-@section('title', 'Добро пожаловать')
+@section('title', 'Главная — Медицинская система')
 
+{{-- Навигационная панель --}}
+@section('navbar')
+    <div class="navbar-container">
+        <a href="{{ route('landing') }}" class="navbar-logo">МедСистема</a>
+        <ul class="navbar-menu">
+            <li><a href="{{ route('landing') }}">Главная</a></li>
+            <li><a href="{{ route('login.form') }}">Войти</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Регистрация</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('doctor.register.form') }}">Доктора</a></li>
+                    <li><a href="{{ route('patient.register.form') }}">Пациента</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+@endsection
+
+{{-- Основной контент страницы --}}
 @section('content')
     <div class="hero-section">
         <h1>Добро пожаловать в нашу медицинскую систему</h1>
@@ -28,7 +47,6 @@
             <button class="carousel-button next">❯</button>
         </div>
     </div>
-
 
     {{-- Описание функционала --}}
     <div class="features-section">

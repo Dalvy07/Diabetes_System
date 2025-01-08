@@ -51,7 +51,8 @@ use Illuminate\Support\Facades\Route;
 
 // Главная страница
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return view('welcomeV2');
 })->name('landing');
 
 // Группа маршрутов для гостей
