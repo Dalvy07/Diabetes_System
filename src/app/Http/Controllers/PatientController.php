@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function home()
+    public function dashboard()
     {
         // if (!Auth::user()->patient) { ... }
 
-        return view('patient.home');
+        return view('patient.patient_dashboard');
     }
 }

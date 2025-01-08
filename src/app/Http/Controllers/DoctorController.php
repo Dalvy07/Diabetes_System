@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
-    public function home()
+    public function dashboard()
     {
         // Можно какие-то проверки
         // if (!Auth::user()->doctor) { ... }
 
-        return view('doctor.home');
+        return view('doctor.doctor_dashboard');
     }
 }

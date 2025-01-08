@@ -1,58 +1,103 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-
+//use App\Http\Controllers\AuthController;
+//use App\Http\Controllers\DoctorController;
+//use App\Http\Controllers\PatientController;
+//use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Route;
+//
+//// Главная страница (Landing)
 //Route::get('/', function () {
-//    return view('welcome');
+//    // Если пользователь уже залогинен...
+//    if (Auth::check()) {
+//        // Если доктор -> перенаправляем на дашборд доктора
+//        if (Auth::user()->doctor) {
+//            return redirect()->route('doctor.doctor_dashboard');
+//        }
+//        // Если пациент -> перенаправляем на дашборд пациента
+//        elseif (Auth::user()->patient) {
+//            return redirect()->route('patient.patient.dashboard');
+//        }
+//    }
+//
+//    // Иначе просто отображаем гостевую страницу
+//    return view('welcomeV2');
 //})->name('landing');
 //
-//// Registration
-//Route::get('/register/doctor',  [AuthController::class, 'showDoctorRegisterForm'])->name('doctor.register.form');
-//Route::post('/register/doctor', [AuthController::class, 'registerDoctor'])->name('doctor.register');
+//// Группа маршрутов для гостей
+//Route::middleware('guest')->group(function () {
+//    // Регистрация доктора
+//    Route::get('/register/doctor', [AuthController::class, 'showDoctorRegisterForm'])->name('doctor.register.form');
+//    Route::post('/register/doctor', [AuthController::class, 'registerDoctor'])->name('doctor.register');
 //
-//Route::get('/register/patient',  [AuthController::class, 'showPatientRegisterForm'])->name('patient.register.form');
-//Route::post('/register/patient', [AuthController::class, 'registerPatient'])->name('patient.register');
+//    // Регистрация пациента
+//    Route::get('/register/patient', [AuthController::class, 'showPatientRegisterForm'])->name('patient.register.form');
+//    Route::post('/register/patient', [AuthController::class, 'registerPatient'])->name('patient.register');
 //
-//// Authentication
-//Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
-//Route::post('/login', [AuthController::class, 'login'])->name('login');
+//    // Вход в систему
+//    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+//    Route::post('/login', [AuthController::class, 'login'])->name('login');
 //
-//Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+//    // Запрос на сброс пароля
+//    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+//    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 //
-//// Email verification
-//Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])
-//    ->middleware('auth')
-//    ->name('verification.notice');
+//    // Форма для сброса пароля
+//    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+//    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+//});
 //
-//Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
-//    ->middleware(['auth', 'signed'])
-//    ->name('verification.verify');
-//
+//// Группа маршрутов для авторизованных пользователей
 //Route::middleware('auth')->group(function () {
+//    // Email verification
+//    Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])
+//        ->name('verification.notice');
 //
-//    // Домашняя страница доктора
-//    Route::get('/doctor/home', [DoctorController::class, 'home'])
-//        ->name('doctor.home');
+//    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+//        ->middleware(['signed']) // Проверяет подпись ссылки
+//        ->name('verification.verify');
 //
-//    // Домашняя страница пациента
-//    Route::get('/patient/home', [PatientController::class, 'home'])
-//        ->name('patient.home');
+//    Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
+//        ->name('verification.send');
 //
-//    // Logout
-//    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+//    // Защищённые маршруты для подтверждённых пользователей
+//    Route::middleware('verified')->group(function () {
+//        // Домашняя страница доктора
+//        Route::get('/doctor/home', [DoctorController::class, 'home'])->name('doctor.home');
+//
+//        // Домашняя страница пациента
+//        Route::get('/patient/home', [PatientController::class, 'home'])->name('patient.home');
+//    });
 //
 //    // Удаление аккаунта
 //    Route::delete('/account/delete', [AuthController::class, 'deleteAccount'])->name('account.delete');
+//
+//    // Выход из системы
+//    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //});
 
-// Главная страница
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
+
+// Главная страница (Landing)
 Route::get('/', function () {
-//    return view('welcome');
-    return view('welcomeV2');
+    // Если пользователь уже залогинен...
+    if (Auth::check()) {
+        // Если доктор -> перенаправляем на дашборд доктора
+        if (Auth::user()->doctor) {
+            return redirect()->route('doctor.dashboard');
+        }
+        // Если пациент -> перенаправляем на дашборд пациента
+        elseif (Auth::user()->patient) {
+            return redirect()->route('patient.dashboard');
+        }
+    }
+
+    // Иначе просто отображаем гостевую страницу
+    return view('welcome');
 })->name('landing');
 
 // Группа маршрутов для гостей
@@ -80,25 +125,25 @@ Route::middleware('guest')->group(function () {
 
 // Группа маршрутов для авторизованных пользователей
 Route::middleware('auth')->group(function () {
+    // Маршруты, требующие верификации email
+    Route::middleware('verified')->group(function () {
+        // Домашняя страница доктора (теперь "дашборд")
+        Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard'])->name('doctor.dashboard');
+
+        // Домашняя страница пациента (теперь "дашборд")
+        Route::get('/patient/dashboard', [PatientController::class, 'dashboard'])->name('patient.dashboard');
+    });
+
     // Email verification
     Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])
         ->name('verification.notice');
 
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
-        ->middleware(['signed']) // Проверяет подпись ссылки
+        ->middleware(['signed'])
         ->name('verification.verify');
 
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
         ->name('verification.send');
-
-    // Защищённые маршруты для подтверждённых пользователей
-    Route::middleware('verified')->group(function () {
-        // Домашняя страница доктора
-        Route::get('/doctor/home', [DoctorController::class, 'home'])->name('doctor.home');
-
-        // Домашняя страница пациента
-        Route::get('/patient/home', [PatientController::class, 'home'])->name('patient.home');
-    });
 
     // Удаление аккаунта
     Route::delete('/account/delete', [AuthController::class, 'deleteAccount'])->name('account.delete');
@@ -106,3 +151,4 @@ Route::middleware('auth')->group(function () {
     // Выход из системы
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+

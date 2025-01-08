@@ -255,10 +255,10 @@ class AuthController extends Controller
         // 6. Перенаправляем пользователя в зависимости от его роли
         if ($user->doctor) {
             // Это доктор
-            return redirect()->route('doctor.home');
+            return redirect()->route('doctor.dashboard');
         } elseif ($user->patient) {
             // Это пациент
-            return redirect()->route('patient.home');
+            return redirect()->route('patient.dashboard');
         } else {
             // Возможно, это админ или кто-то ещё
             return redirect()->route('home');
