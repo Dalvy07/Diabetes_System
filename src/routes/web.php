@@ -123,7 +123,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
-// Группа маршрутов для авторизованных пользователей
+// Группа маршрутов для авторизованных пользователей - ОБЯЗАТЕЛЬНО ПОМЕНЯТЬ, БО ВИРИФИЦИРОВАННЫЙ ПАЦИЕНТ СМОЖЕТ ЗАЙТИ К ДОКТОРУ????
 Route::middleware('auth')->group(function () {
     // Маршруты, требующие верификации email
     Route::middleware('verified')->group(function () {

@@ -8,12 +8,16 @@ Examples how to use commands in the contaigner
 Для отката всех миграций
     docker-compose exec app php artisan migrate:reset
 
+
 Создание модели
     docker-compose exec app php artisan make:model имя_модели
 
 
+Создание контроллера
+    docker-compose exec app php artisan make:controller имя_контроллера
 
 
+Работа с несколькими командами подряд
 docker-compose exec app bash
 php artisan migrate
 php artisan serve

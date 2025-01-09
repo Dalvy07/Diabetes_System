@@ -9,9 +9,9 @@
 
         <ul class="navbar-menu">
             {{-- Моя страница -> домашняя страница доктора --}}
-{{--            <li>--}}
-{{--                <a href="{{ route('doctor.home') }}">Моя страница</a>--}}
-{{--            </li>--}}
+            <li>
+                <a href="{{ route('doctor.dashboard') }}">Моя страница</a>
+            </li>
 
 {{--            <li>--}}
 {{--                <a href="{{ route('doctor.profile') }}">Профиль</a>--}}
