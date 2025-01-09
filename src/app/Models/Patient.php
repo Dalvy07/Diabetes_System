@@ -22,4 +22,14 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function healthData()
+    {
+        return $this->hasOne(HealthData::class);
+    }
+
+    public function treatmentPlans()
+    {
+        return $this->hasMany(TreatmentPlan::class);
+    }
 }
