@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GlucoseMeasurement extends Model
 {
+    use HasFactory;
+
     protected $table = 'glucose_measurements';
 
     protected $fillable = [
