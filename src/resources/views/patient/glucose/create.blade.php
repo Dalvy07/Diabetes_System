@@ -5,7 +5,7 @@
 @section('content')
     <h1>Добавить новое измерение</h1>
 
-    {{-- Вывод ошибок валидации --}}
+     Вывод ошибок валидации
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -35,8 +35,9 @@
 
         <div class="form-group">
             <label for="note">Примечание</label>
-            <input type="text" name="note" id="note">
+            <input type="text" name="note" id="note" maxlength="255">
         </div>
+
 
         <button type="submit">Сохранить</button>
     </form>

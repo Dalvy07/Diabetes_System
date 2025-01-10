@@ -84,8 +84,10 @@ class AuthController extends Controller
             'email'       => 'required|email|unique:users,email',
             'password'    => 'required|min:6|confirmed',
             // Поля для patient
-            'birth_date'  => 'required|date',
+            'birth_date'  => 'required|date|before_or_equal:today',
             'gender'      => 'required|in:male,female,other',
+            // Новое поле
+            'diagnosis_date'  => 'nullable|date|before_or_equal:today',
         ]);
 
         // 2. Создаём запись в `users`
@@ -103,11 +105,14 @@ class AuthController extends Controller
             'gender'     => $validated['gender'],
         ]);
 
-//        // 4. Логин
-//        Auth::login($user);
-//
-//        // 5. Редирект
-//        return redirect()->route('patient.home');
+        $diagnosisDate = $validated['diagnosis_date'] ?? null;
+
+        // Сразу создаём HealthData для пациента
+        $healthData = $patient->healthData()->create([
+            'creation_datetime' => now(),
+            'diagnosis_date'    => $diagnosisDate,    // или нужная дата
+            // Добавьте другие поля при необходимости
+        ]);
 
         // 4. Логин
         Auth::login($user);
@@ -191,10 +196,10 @@ class AuthController extends Controller
 
         if ($user->doctor) {
             // Это доктор
-            return redirect()->route('doctor.home')->with('status', 'Ваш email успешно подтверждён!');
+            return redirect()->route('doctor.dashboard')->with('status', 'Ваш email успешно подтверждён!');
         } elseif ($user->patient) {
             // Это пациент
-            return redirect()->route('patient.home')->with('status', 'Ваш email успешно подтверждён!');
+            return redirect()->route('patient.dashboard')->with('status', 'Ваш email успешно подтверждён!');
         } else {
             // Возможно, это админ или кто-то ещё
             return redirect()->route('home')->with('status', 'Ваш email успешно подтверждён!');

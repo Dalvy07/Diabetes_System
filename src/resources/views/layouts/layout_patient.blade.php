@@ -18,16 +18,16 @@
 {{--            </li>--}}
 
             {{-- Dropdown: Медицинские данные --}}
-{{--            <li class="dropdown">--}}
-{{--                <a href="#" class="dropdown-toggle">Медицинские данные</a>--}}
-{{--                <ul class="dropdown-menu">--}}
-{{--                    <li><a href="{{ route('patient.glucose') }}">Измерения глюкозы</a></li>--}}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Медицинские данные</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('patient.glucose.index') }}">Измерения глюкозы</a></li>
 {{--                    <li><a href="{{ route('patient.diet') }}">Диета</a></li>--}}
 {{--                    <li><a href="{{ route('patient.activity') }}">Физическая активность</a></li>--}}
 {{--                    <li><a href="{{ route('patient.medications') }}">Медикаменты</a></li>--}}
 {{--                    <li><a href="{{ route('patient.treatment-plan') }}">План лечения</a></li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
+                </ul>
+            </li>
 
             {{-- Кнопка "Выход" (через форму) --}}
             <li>
@@ -46,5 +46,4 @@
 @endsection
 
 {{-- Основной контент (по умолчанию пуст), переопределяется в дочерних вьюхах --}}
-@section('content')
-@show
+

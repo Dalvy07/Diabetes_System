@@ -137,6 +137,12 @@
                 </select>
             </div>
 
+            <!-- Новое поле: Дата постановки диагноза -->
+            <div class="form-group">
+                <label for="diagnosis_date">Дата постановки диагноза</label>
+                <input type="date" name="diagnosis_date" id="diagnosis_date" value="{{ old('diagnosis_date') }}" class="form-input">
+            </div>
+
             <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
         </form>
 

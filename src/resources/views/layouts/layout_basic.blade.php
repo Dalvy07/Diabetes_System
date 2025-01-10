@@ -30,19 +30,16 @@
 {{-- Основной контент сайта --}}
 <main class="main-content">
     {{-- Секция для приветственного блока (Hero), если нужна --}}
-    @section('hero')
+    @yield('hero')
         {{-- Пример: <section class="hero-section">... контент ...</section> --}}
-    @show
 
     {{-- Секция для карусели (если нужна) --}}
-    @section('carousel')
+    @yield('carousel')
         {{-- Пример: <section class="carousel">... карусель ...</section> --}}
-    @show
 
     {{-- Секция для функциональных блоков (Features), если нужна --}}
-    @section('features')
+    @yield('features')
         {{-- Пример: <section class="features-section">... функционал ...</section> --}}
-    @show
 
     {{-- Основная часть контента (страницы, формы и т.д.) --}}
     @yield('content')

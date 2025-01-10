@@ -76,13 +76,14 @@
 //    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //});
 
+use App\Http\Controllers\GlucoseController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 
-// Главная страница (Landing)
 Route::get('/', function () {
     // Если пользователь уже залогинен...
     if (Auth::check()) {
@@ -102,6 +103,8 @@ Route::get('/', function () {
 
 // Группа маршрутов для гостей
 Route::middleware('guest')->group(function () {
+    // Главная страница (Landing)
+
     // Регистрация доктора
     Route::get('/register/doctor', [AuthController::class, 'showDoctorRegisterForm'])->name('doctor.register.form');
     Route::post('/register/doctor', [AuthController::class, 'registerDoctor'])->name('doctor.register');
@@ -125,15 +128,6 @@ Route::middleware('guest')->group(function () {
 
 // Группа маршрутов для авторизованных пользователей - ОБЯЗАТЕЛЬНО ПОМЕНЯТЬ, БО ВИРИФИЦИРОВАННЫЙ ПАЦИЕНТ СМОЖЕТ ЗАЙТИ К ДОКТОРУ????
 Route::middleware('auth')->group(function () {
-    // Маршруты, требующие верификации email
-    Route::middleware('verified')->group(function () {
-        // Домашняя страница доктора (теперь "дашборд")
-        Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard'])->name('doctor.dashboard');
-
-        // Домашняя страница пациента (теперь "дашборд")
-        Route::get('/patient/dashboard', [PatientController::class, 'dashboard'])->name('patient.dashboard');
-    });
-
     // Email verification
     Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])
         ->name('verification.notice');
@@ -150,5 +144,35 @@ Route::middleware('auth')->group(function () {
 
     // Выход из системы
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Маршруты, требующие верификации email
+    Route::middleware('verified')->group(function () {
+        Route::prefix('patient')->middleware(CheckRole::class.':patient')->group(function () {
+            // Главная страница (Dashboard)
+            Route::get('/dashboard', [PatientController::class, 'dashboard'])
+                ->name('patient.dashboard');
+
+            // Глюкоза (можно сделать resource, если хочется CRUD)
+            Route::get('/glucose', [GlucoseController::class, 'index'])
+                ->name('patient.glucose.index');
+            Route::get('/glucose/create', [GlucoseController::class, 'create'])
+                ->name('patient.glucose.create');
+            Route::post('/glucose', [GlucoseController::class, 'store'])
+                ->name('patient.glucose.store');
+            Route::get('/glucose/{id}/edit', [GlucoseController::class, 'edit'])
+                ->name('patient.glucose.edit');
+            Route::put('/glucose/{id}', [GlucoseController::class, 'update'])
+                ->name('patient.glucose.update');
+            Route::delete('/glucose/{id}', [GlucoseController::class, 'destroy'])
+                ->name('patient.glucose.destroy');
+
+        });
+
+        Route::prefix('doctor')->middleware(CheckRole::class.':doctor')->group(function () {
+            // Главная страница (Dashboard)
+            Route::get('/dashboard', [DoctorController::class, 'dashboard'])
+                ->name('doctor.dashboard');
+        });
+    });
 });
 
