@@ -104,8 +104,23 @@
 
             <h3 class="form-section-title">Основные данные</h3>
             <div class="form-group">
-                <label for="name">Имя</label>
+                <label for="name">Имя пользователя</label>
                 <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">Имя</label>
+                <input type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Фамилия</label>
+                <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pesel">PESEL</label>
+                <input type="text" name="pesel" id="pesel" value="{{ old('pesel') }}" class="form-input" required maxlength="11" minlength="11">
             </div>
 
             <div class="form-group">

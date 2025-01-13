@@ -16,9 +16,20 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('verification.send') }}" class="auth-form">
+{{--        <form method="POST" action="{{ route('verification.send') }}" class="auth-form">--}}
+{{--            @csrf--}}
+{{--            <button type="submit" class="btn btn-primary">Отправить письмо снова</button>--}}
+{{--        </form>--}}
+        <!-- Ссылка, которая отправляет скрытую форму -->
+        <a href="#"
+           onclick="event.preventDefault(); document.getElementById('resend-verification-form').submit();"
+           class="btn btn-primary">
+            Отправить письмо снова
+        </a>
+
+        <!-- Скрытая форма для отправки письма -->
+        <form id="resend-verification-form" action="{{ route('verification.send') }}" method="POST" style="display: none;">
             @csrf
-            <button type="submit" class="btn btn-primary">Отправить письмо снова</button>
         </form>
 
         <p class="auth-footer-links">

@@ -25,6 +25,9 @@ class AuthController extends Controller
             'name'             => 'required|string|max:255',
             'email'            => 'required|email|unique:users,email',
             'password'         => 'required|min:6|confirmed',
+            'first_name'   => 'required|string|max:255',
+            'last_name'    => 'required|string|max:255',
+            'pesel'        => 'required|string|size:11|unique:users,pesel',
             // Поля для doctor
             'specializations'  => 'required|string', // список через запятую
             'certificates'     => 'nullable|string', // тоже можем парсить как массив
@@ -38,6 +41,9 @@ class AuthController extends Controller
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role'  => 'doctor',  // если используете
+            'first_name'   => $validated['first_name'],
+            'last_name'    => $validated['last_name'],
+            'pesel'        => $validated['pesel'],
         ]);
 
         // 3. Создаём запись в `doctors`, связав user_id
@@ -88,6 +94,9 @@ class AuthController extends Controller
             'gender'      => 'required|in:male,female,other',
             // Новое поле
             'diagnosis_date'  => 'nullable|date|before_or_equal:today',
+            'first_name'   => 'required|string|max:255',
+            'last_name'    => 'required|string|max:255',
+            'pesel'        => 'required|string|size:11|unique:users,pesel',
         ]);
 
         // 2. Создаём запись в `users`
@@ -96,6 +105,9 @@ class AuthController extends Controller
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role'  => 'patient',  // если используете
+            'first_name'   => $validated['first_name'],
+            'last_name'    => $validated['last_name'],
+            'pesel'        => $validated['pesel'],
         ]);
 
         // 3. Создаём запись в `patients`

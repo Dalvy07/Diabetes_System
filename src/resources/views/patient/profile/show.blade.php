@@ -66,10 +66,18 @@
         <table class="profile-table">
             <tbody>
             <tr>
-                <th>Имя</th>
+                <th>Имя пользователя</th>
                 <td>{{ $user->name }}</td>
             </tr>
             <tr>
+            <tr>
+                <th>Имя</th>
+                <td>{{ $user->first_name }}</td>
+            </tr>
+            <tr>
+                <th>Фамилия</th>
+                <td>{{ $user->last_name }}</td>
+            </tr>
                 <th>Email</th>
                 <td>{{ $user->email }}</td>
             </tr>

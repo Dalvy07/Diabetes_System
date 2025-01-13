@@ -41,7 +41,9 @@ class PatientController extends Controller
             'email'      => 'required|email|unique:users,email,'.$user->id,
             'birth_date' => 'required|date|before_or_equal:today',
             'gender'     => 'required|in:male,female,other',
-            // Добавьте другие поля, если необходимо
+            'first_name'  => 'required|string|max:255',
+            'last_name'   => 'required|string|max:255',
+            'pesel'       => 'required|string|size:11|unique:users,pesel,'.$user->id,
         ]);
 
         // Обновление данных в таблице users
@@ -49,6 +51,9 @@ class PatientController extends Controller
             'name'  => $validated['name'],
             'email' => $validated['email'],
             // Пароль обновлять отдельной логикой, если требуется
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'],
+            'pesel'      => $validated['pesel'],
         ]);
 
         // Обновление данных в таблице patients

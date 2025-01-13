@@ -61,6 +61,20 @@ class GlucoseMeasurementFactory extends Factory
 Создание записей
      // Предположим, что у вас уже есть экземпляр HealthData, например $healthData
      // И вы хотите создать 50 измерений для него:
+     Сначала получаем первого пациента с помощию:
+     $patient = \App\Models\Patient::first();
+     // 2. Проверяем, есть ли у пациента связанный HealthData
+    if (!$patient->healthData) {
+        // Если HealthData отсутствует, создаём его
+        $healthData = $patient->healthData()->create([
+            'creation_datetime' => now(),
+            'diagnosis_date'    => null, // или укажите реальную дату, если нужно
+        ]);
+    } else {
+        // Если существует, просто получаем его
+        $healthData = $patient->healthData;
+    }
+     А потом генерируем данные с помощью фабрики
      \App\Models\GlucoseMeasurement::factory()->count(50)->create([
      'health_data_id' => $healthData->id,
      ]);

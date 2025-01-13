@@ -20,10 +20,29 @@
         @method('PUT')
 
         <div class="form-group">
-            <label for="name">Имя</label>
+            <label for="name">Имя пользователя</label>
             <input type="text" name="name" id="name" class="form-input"
                    value="{{ old('name', $user->name) }}" required>
         </div>
+
+        <div class="form-group">
+            <label for="first_name">Имя</label>
+            <input type="text" name="first_name" id="first_name" class="form-input"
+                   value="{{ old('first_name', $user->first_name) }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Фамилия</label>
+            <input type="text" name="last_name" id="last_name" class="form-input"
+                   value="{{ old('last_name', $user->last_name) }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pesel">PESEL</label>
+            <input type="text" name="pesel" id="pesel" class="form-input"
+                   value="{{ old('pesel', $user->pesel) }}" required maxlength="11" minlength="11">
+        </div>
+
 
         <div class="form-group">
             <label for="email">Email</label>
