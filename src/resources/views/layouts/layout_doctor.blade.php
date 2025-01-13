@@ -13,13 +13,13 @@
                 <a href="{{ route('doctor.dashboard') }}">Моя страница</a>
             </li>
 
-{{--            <li>--}}
-{{--                <a href="{{ route('doctor.profile') }}">Профиль</a>--}}
-{{--            </li>--}}
+            <li>
+                <a href="{{ route('doctor.profile') }}">Профиль</a>
+            </li>
 
-{{--            <li>--}}
-{{--                <a href="{{ route('doctor.patients') }}">Пациенты</a>--}}
-{{--            </li>--}}
+            <li>
+                <a href="{{ route('doctor.patients') }}">Пациенты</a>
+            </li>
 
             {{-- Кнопка "Выход" (через форму) --}}
             <li>
@@ -37,5 +37,4 @@
     </div>
 @endsection
 
-@section('content')
-@show
+{{-- Основной контент (по умолчанию пуст), переопределяется в дочерних вьюхах --}}

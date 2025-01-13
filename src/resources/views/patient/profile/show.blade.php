@@ -78,6 +78,7 @@
                 <th>Фамилия</th>
                 <td>{{ $user->last_name }}</td>
             </tr>
+            <tr>
                 <th>Email</th>
                 <td>{{ $user->email }}</td>
             </tr>

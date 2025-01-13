@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TreatmentPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,5 +66,28 @@ class PatientController extends Controller
 
         return redirect()->route('patient.profile')
             ->with('status', 'Профиль успешно обновлён!');
+    }
+
+    public function viewTreatmentPlans()
+    {
+        $patient = Auth::user()->patient;
+
+        // Извлекаем планы лечения текущего пациента, отсортированные по дате создания
+        $treatmentPlans = TreatmentPlan::where('patient_id', $patient->id)
+            ->orderByDesc('creation_date')
+            ->paginate(10);
+
+        return view('patient.treatment_plan.index', compact('treatmentPlans'));
+    }
+
+    public function viewTreatmentPlan(TreatmentPlan $plan)
+    {
+        // Проверить, что план принадлежит текущему пациенту, опционально
+        $patient = Auth::user()->patient;
+        if ($plan->patient_id !== $patient->id) {
+            abort(403, 'Доступ запрещён.');
+        }
+
+        return view('patient.treatment_plan.view', compact('plan'));
     }
 }
