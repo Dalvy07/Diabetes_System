@@ -320,7 +320,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Перенаправляем на главную страницу
+        // Перенаправляем на главную страницу.
         return redirect('/')->with('status', 'Ваш аккаунт был успешно удалён.');
     }
 
