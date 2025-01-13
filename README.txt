@@ -35,68 +35,33 @@ npm install
 ...
 
 
----------------------------------------------------------------
-TEMPORARY TEXT
+Пример работы с Factories на примере GlucoseMeasurementFactory
+class GlucoseMeasurementFactory extends Factory
+{
+    protected $model = GlucoseMeasurement::class;
 
-use App\Http\Controllers\Patient\PatientController;
-use App\Http\Controllers\Patient\ProfileController;
-use App\Http\Controllers\Patient\GlucoseController;
-use App\Http\Controllers\Patient\DietController;
-use App\Http\Controllers\Patient\ActivityController;
-use App\Http\Controllers\Patient\MedicationController;
-use App\Http\Controllers\Patient\TreatmentPlanController;
+    public function definition()
+    {
+        return [
+            'health_data_id'       => null, // Этот ключ нужно задать отдельно или через состояние фабрики
+            'glucose_level'        => $this->faker->randomFloat(1, 3.0, 15.0),  // уровень глюкозы от 3.0 до 15.0
+            'measurement_datetime' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'is_before_meal'       => $this->faker->boolean,
+            'note'                 => $this->faker->sentence,
+        ];
+    }
+}
 
-// Группа маршрутов для пациента
-Route::prefix('patient')
-    ->middleware(['auth', 'checkRole:patient']) // checkRole:patient - ваша кастомная проверка, что пользователь пациент
-    ->group(function() {
-        
-        // Главная страница (Dashboard)
-        Route::get('/dashboard', [PatientController::class, 'dashboard'])
-             ->name('patient.dashboard');
 
-        // Профиль
-        Route::get('/profile', [ProfileController::class, 'show'])
-             ->name('patient.profile');
-        Route::get('/profile/edit', [ProfileController::class, 'edit'])
-             ->name('patient.profile.edit');
-        Route::post('/profile/update', [ProfileController::class, 'update'])
-             ->name('patient.profile.update');
 
-        // Глюкоза (можно сделать resource, если хочется CRUD)
-        Route::get('/glucose', [GlucoseController::class, 'index'])
-             ->name('patient.glucose.index');
-        Route::get('/glucose/create', [GlucoseController::class, 'create'])
-             ->name('patient.glucose.create');
-        Route::post('/glucose', [GlucoseController::class, 'store'])
-             ->name('patient.glucose.store');
-        // Можно добавить show/edit/update/delete по желанию
-
-        // Диета
-        Route::get('/diet', [DietController::class, 'index'])
-             ->name('patient.diet.index');
-        Route::get('/diet/create', [DietController::class, 'create'])
-             ->name('patient.diet.create');
-        Route::post('/diet', [DietController::class, 'store'])
-             ->name('patient.diet.store');
-        // и т.д.
-
-        // Физическая активность
-        Route::get('/activity', [ActivityController::class, 'index'])
-             ->name('patient.activity.index');
-        Route::get('/activity/create', [ActivityController::class, 'create'])
-             ->name('patient.activity.create');
-        Route::post('/activity', [ActivityController::class, 'store'])
-             ->name('patient.activity.store');
-
-        // Медикаменты
-        Route::get('/medications', [MedicationController::class, 'index'])
-             ->name('patient.medications.index');
-        // ...
-
-        // План лечения
-        Route::get('/treatment-plan', [TreatmentPlanController::class, 'index'])
-             ->name('patient.treatment-plan.index');
-        // ...
-    });
+Для создания фабрики
+     docker-compose exec app php artisan make:factory GlucoseMeasurementFactory --model=GlucoseMeasurement
+Работа с tinker для использования фабрики (перекидывает в терминал tinkera, потому стоит юзать docker-compose exec app bash)
+     php artisan tinker
+Создание записей
+     // Предположим, что у вас уже есть экземпляр HealthData, например $healthData
+     // И вы хотите создать 50 измерений для него:
+     \App\Models\GlucoseMeasurement::factory()->count(50)->create([
+     'health_data_id' => $healthData->id,
+     ]);
 

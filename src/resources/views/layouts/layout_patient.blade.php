@@ -13,9 +13,9 @@
                 <a href="{{ route('patient.dashboard') }}">Моя страница</a>
             </li>
 
-{{--            <li>--}}
-{{--                <a href="{{ route('patient.profile') }}">Профиль</a>--}}
-{{--            </li>--}}
+            <li>
+                <a href="{{ route('patient.profile') }}">Профиль</a>
+            </li>
 
             {{-- Dropdown: Медицинские данные --}}
             <li class="dropdown">

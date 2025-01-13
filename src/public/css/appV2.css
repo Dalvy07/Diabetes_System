@@ -581,4 +581,72 @@ table tbody tr:last-child td {
     width: 100%;
     margin-top: 1rem;
 }
+/*!* Стилизация контейнера профиля *!*/
+/*.profile-container {*/
+/*    max-width: 600px;*/
+/*    margin: 2rem auto;*/
+/*    padding: 2rem;*/
+/*    background-color: #ffffff;*/
+/*    border-radius: 20px;*/
+/*    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+/*    text-align: left;*/
+/*}*/
+
+/*!* Стилизация таблицы профиля *!*/
+/*.profile-table {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*    margin-bottom: 1rem;*/
+/*}*/
+/* Стилизация контейнера профиля */
+.profile-container {
+    max-width: 600px;        /* Максимальная ширина контейнера */
+    width: 100%;             /* Занимает всю доступную ширину до max-width */
+    margin: 2rem auto;       /* Центрирование контейнера и отступы сверху/снизу */
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/*!* Стилизация таблицы профиля *!*/
+.profile-table {
+    width: 100%;             /* Таблица занимает всю ширину контейнера */
+    max-width: 100%;         /* Не растягивается сверх границ контейнера */
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+
+.profile-table th,
+.profile-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+.profile-table th {
+    text-align: left;
+    background-color: #f3f4f6;
+    color: #1d4ed8;
+    font-weight: bold;
+    width: 40%; /* задаем ширину для заголовков */
+}
+
+.profile-table td {
+    text-align: left;
+    color: #374151;
+}
+
+.profile-table tr:last-child th,
+.profile-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Кнопка редактирования профиля остаётся без изменений */
+.edit-profile-btn {
+    display: inline-block;
+    margin-top: 1rem;
+}
 

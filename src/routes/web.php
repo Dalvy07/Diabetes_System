@@ -166,6 +166,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/glucose/{id}', [GlucoseController::class, 'destroy'])
                 ->name('patient.glucose.destroy');
 
+
+            // Маршрут для отображения страницы профиля
+            Route::get('/profile', [PatientController::class, 'profile'])
+                ->name('patient.profile');
+
+            // Маршрут для отображения формы редактирования профиля
+            Route::get('/profile/edit', [PatientController::class, 'editProfile'])
+                ->name('patient.profile.edit');
+
+            // Маршрут для обновления данных профиля (POST или PUT)
+            Route::put('/profile', [PatientController::class, 'updateProfile'])
+                ->name('patient.profile.update');
         });
 
         Route::prefix('doctor')->middleware(CheckRole::class.':doctor')->group(function () {
