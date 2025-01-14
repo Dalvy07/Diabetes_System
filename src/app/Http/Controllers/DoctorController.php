@@ -66,8 +66,10 @@ class DoctorController extends Controller
             'is_available'    => !empty($validated['is_available']),
         ]);
 
+//        return redirect()->route('doctor.profile')
+//            ->with('status', 'Профиль успешно обновлён!');
         return redirect()->route('doctor.profile')
-            ->with('status', 'Профиль успешно обновлён!');
+            ->with('status', 'Profile successfully updated!');
     }
 
 //    public function patients(Request $request) {
@@ -140,29 +142,36 @@ class DoctorController extends Controller
             ->first();
 
         if (!$patient) {
+//            return redirect()->route('doctor.patients')
+//                ->with('error', 'Пациент не найден или уже привязан к этому доктору.');
             return redirect()->route('doctor.patients')
-                ->with('error', 'Пациент не найден или уже привязан к этому доктору.');
+                ->with('error', 'Patient not found or already attached to this doctor.');
         }
 
         $doctor->patients()->attach($patient->id);
 
-//        return redirect()->route('doctor.patients')->with('status', 'Пациент успешно привязан.');
+//        return redirect()->route('doctor.patients', ['show_last' => 1])
+//            ->with('status', 'Пациент успешно привязан.');
         return redirect()->route('doctor.patients', ['show_last' => 1])
-            ->with('status', 'Пациент успешно привязан.');
+            ->with('status', 'The patient is successfully tethered.');
     }
 
     public function detachPatient(Patient $patient) {
         $doctor = Auth::user()->doctor;
 
         if (!$doctor->patients()->find($patient->id)) {
+//            return redirect()->route('doctor.patients')
+//                ->with('error', 'Вы не привязаны к этому пациенту.');
             return redirect()->route('doctor.patients')
-                ->with('error', 'Вы не привязаны к этому пациенту.');
+                ->with('error', 'You`re not attached to this patient.');
         }
 
         $doctor->patients()->detach($patient->id);
 
+//        return redirect()->route('doctor.patients')
+//            ->with('status', 'Пациент успешно отвязан.');
         return redirect()->route('doctor.patients')
-            ->with('status', 'Пациент успешно отвязан.');
+            ->with('status', 'The patient has been successfully weaned.');
     }
 
     public function viewPatient(Patient $patient) {
@@ -208,12 +217,10 @@ class DoctorController extends Controller
             'note'                    => $validated['note'] ?? null,
         ]);
 
-//        return redirect()->route('doctor.dashboard')
-//            ->with('status', 'План лечения успешно создан!');
-//        return redirect()->route('doctor.patients')
+//        return redirect()->route('doctor.patients.treatment_plans', $patient->id)
 //            ->with('status', 'План лечения успешно создан!');
         return redirect()->route('doctor.patients.treatment_plans', $patient->id)
-            ->with('status', 'План лечения успешно создан!');
+            ->with('status', 'A treatment plan has been successfully created!');
     }
 
 
@@ -257,19 +264,53 @@ class DoctorController extends Controller
     }
 
     // Обновление плана лечения
+//    public function updateTreatmentPlan(Request $request, TreatmentPlan $plan)
+//    {
+//        $validated = $request->validate([
+//            'status'                   => 'required|string', // добавлено
+//            'diet_recommendations'     => 'nullable|string',
+//            'activity_recommendations' => 'nullable|string',
+//            'medication_plan'          => 'nullable|string',
+//            'glucose_target'           => 'nullable|numeric',
+//            'weight_target'            => 'nullable|numeric',
+//            'note'                     => 'nullable|string',
+//            // Добавьте другие правила валидации по необходимости
+//        ]);
+//
+//        $plan->update([
+//            'status'                   => $validated['status'],
+//            'diet_recommendations'     => $validated['diet_recommendations'] ?? $plan->diet_recommendations,
+//            'activity_recommendations' => $validated['activity_recommendations'] ?? $plan->activity_recommendations,
+//            'medication_plan'          => $validated['medication_plan'] ?? $plan->medication_plan,
+//            'glucose_target'           => $validated['glucose_target'] ?? $plan->glucose_target,
+//            'weight_target'            => $validated['weight_target'] ?? $plan->weight_target,
+//            'note'                     => $validated['note'] ?? $plan->note,
+//            'last_updated'             => now(),
+//            // Обновите другие поля, если необходимо
+//        ]);
+//
+//        return redirect()->route('doctor.treatment_plan.view', $plan->id)
+//            ->with('status', 'План лечения успешно обновлён!');
+//    }
     public function updateTreatmentPlan(Request $request, TreatmentPlan $plan)
     {
         $validated = $request->validate([
-            'status'                   => 'required|string', // добавлено
-            'diet_recommendations'     => 'nullable|string',
-            'activity_recommendations' => 'nullable|string',
-            'medication_plan'          => 'nullable|string',
-            'glucose_target'           => 'nullable|numeric',
-            'weight_target'            => 'nullable|numeric',
-            'note'                     => 'nullable|string',
-            // Добавьте другие правила валидации по необходимости
+            'status'                   => 'required|string|in:active,completed,pending', // статус ограничен допустимыми значениями
+            'diet_recommendations'     => 'nullable|string|max:1000',
+            'activity_recommendations' => 'nullable|string|max:1000',
+            'medication_plan'          => 'nullable|string|max:1000',
+            'glucose_target'           => 'nullable|numeric|min:0|max:50',  // Уровень глюкозы не может быть отрицательным
+            'weight_target'            => 'nullable|numeric|min:0|max:500', // Цель по весу в адекватных пределах
+            'note'                     => 'nullable|string|max:2000',
+            'specializations'          => 'nullable|array',  // Новое поле
+            'specializations.*'        => 'string|max:255',
+            'certificates'             => 'nullable|array',  // Новое поле
+            'certificates.*'           => 'string|max:255',
+            'work_hours'               => 'nullable|string|max:255',
+            'is_available'             => 'nullable|boolean',
         ]);
 
+        // Обновляем план лечения
         $plan->update([
             'status'                   => $validated['status'],
             'diet_recommendations'     => $validated['diet_recommendations'] ?? $plan->diet_recommendations,
@@ -279,12 +320,24 @@ class DoctorController extends Controller
             'weight_target'            => $validated['weight_target'] ?? $plan->weight_target,
             'note'                     => $validated['note'] ?? $plan->note,
             'last_updated'             => now(),
-            // Обновите другие поля, если необходимо
         ]);
 
+        // Если обновляются данные доктора
+        if ($request->hasAny(['specializations', 'certificates', 'work_hours', 'is_available'])) {
+            $doctor = $plan->doctor;
+
+            $doctor->update([
+                'specializations' => $validated['specializations'] ?? $doctor->specializations,
+                'certificates'    => $validated['certificates'] ?? $doctor->certificates,
+                'work_hours'      => $validated['work_hours'] ?? $doctor->work_hours,
+                'is_available'    => $validated['is_available'] ?? $doctor->is_available,
+            ]);
+        }
+
         return redirect()->route('doctor.treatment_plan.view', $plan->id)
-            ->with('status', 'План лечения успешно обновлён!');
+            ->with('status', 'Treatment plan has been successfully updated!');
     }
+
 
     public function destroyTreatmentPlan(TreatmentPlan $plan)
     {
@@ -295,7 +348,9 @@ class DoctorController extends Controller
         $plan->delete();
 
         // Перенаправляем на страницу с планами лечения для того же пациента
+//        return redirect()->route('doctor.patients.treatment_plans', $patientId)
+//            ->with('status', 'План лечения успешно удалён!');
         return redirect()->route('doctor.patients.treatment_plans', $patientId)
-            ->with('status', 'План лечения успешно удалён!');
+            ->with('status', 'The treatment plan has been successfully removed!');
     }
 }

@@ -109,8 +109,10 @@ class GlucoseController extends Controller
         $data['health_data_id'] = $healthData->id;
         GlucoseMeasurement::create($data);
 
+//        return redirect()->route('patient.glucose.index')
+//            ->with('status', 'Новое измерение уровня глюкозы успешно добавлено!');
         return redirect()->route('patient.glucose.index')
-            ->with('status', 'Новое измерение уровня глюкозы успешно добавлено!');
+            ->with('status', 'New glucose measurement successfully added!');
     }
 
     public function edit($id)
@@ -137,8 +139,10 @@ class GlucoseController extends Controller
 
         $measurement->update($validatedData);
 
+//        return redirect()->route('patient.glucose.index')
+//            ->with('status', 'Изменения успешно сохранены!');
         return redirect()->route('patient.glucose.index')
-            ->with('status', 'Изменения успешно сохранены!');
+            ->with('status', 'The changes have been successfully saved!');
     }
 
     public function destroy($id)
@@ -154,8 +158,10 @@ class GlucoseController extends Controller
         $measurement->delete();
 
         // Перенаправляем обратно на страницу с измерениями и показываем сообщение об успешном удалении
+//        return redirect()->route('patient.glucose.index')
+//            ->with('status', 'Измерение успешно удалено!');
         return redirect()->route('patient.glucose.index')
-            ->with('status', 'Измерение успешно удалено!');
+            ->with('status', 'Measurement successfully deleted!');
     }
 
 }

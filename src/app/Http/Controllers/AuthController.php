@@ -73,7 +73,9 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         // 6. Перенаправляем на страницу уведомления
-        return redirect()->route('verification.notice')->with('status', 'Проверьте ваш email для подтверждения.');
+//        return redirect()->route('verification.notice')->with('status', 'Проверьте ваш email для подтверждения.');
+        return redirect()->route('verification.notice')->with('status', 'Check your email for confirmation.');
+
     }
 
     public function showPatientRegisterForm()
@@ -133,7 +135,9 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         // 6. Перенаправляем на страницу уведомления
-        return redirect()->route('verification.notice')->with('status', 'Проверьте ваш email для подтверждения.');
+//        return redirect()->route('verification.notice')->with('status', 'Проверьте ваш email для подтверждения.');
+        return redirect()->route('verification.notice')->with('status', 'Check your email for confirmation.');
+
     }
 
     // Показ формы запроса ссылки для сброса пароля
@@ -208,13 +212,19 @@ class AuthController extends Controller
 
         if ($user->doctor) {
             // Это доктор
-            return redirect()->route('doctor.dashboard')->with('status', 'Ваш email успешно подтверждён!');
+//            return redirect()->route('doctor.dashboard')->with('status', 'Ваш email успешно подтверждён!');
+            return redirect()->route('doctor.dashboard')->with('status', 'Your email has been successfully verified!');
+
         } elseif ($user->patient) {
             // Это пациент
-            return redirect()->route('patient.dashboard')->with('status', 'Ваш email успешно подтверждён!');
+//            return redirect()->route('patient.dashboard')->with('status', 'Ваш email успешно подтверждён!');
+            return redirect()->route('patient.dashboard')->with('status', 'Your email has been successfully verified!');
+
         } else {
             // Возможно, это админ или кто-то ещё
-            return redirect()->route('home')->with('status', 'Ваш email успешно подтверждён!');
+//            return redirect()->route('home')->with('status', 'Ваш email успешно подтверждён!');
+            return redirect()->route('home')->with('status', 'Your email has been successfully verified!');
+
         }
     }
 
@@ -227,19 +237,27 @@ class AuthController extends Controller
 
             if ($user->doctor) {
                 // Это доктор
-                return redirect()->route('doctor.home')->with('status', 'Ваш email уже подтверждён.');
+//                return redirect()->route('doctor.home')->with('status', 'Ваш email уже подтверждён.');
+                return redirect()->route('doctor.home')->with('status', 'Your email has already been verified.');
+
             } elseif ($user->patient) {
                 // Это пациент
-                return redirect()->route('patient.home')->with('status', 'Ваш email уже подтверждён.');
+//                return redirect()->route('patient.home')->with('status', 'Ваш email уже подтверждён.');
+                return redirect()->route('patient.home')->with('status', 'Your email has already been verified.');
+
             } else {
                 // Возможно, это админ или кто-то ещё
-                return redirect()->route('home')->with('status', 'Ваш email уже подтверждён.');
+//                return redirect()->route('home')->with('status', 'Ваш email уже подтверждён.');
+                return redirect()->route('home')->with('status', 'Your email has already been verified.');
+
             }
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('status', 'Ссылка для подтверждения отправлена!');
+//        return back()->with('status', 'Ссылка для подтверждения отправлена!');
+        return back()->with('status', 'Confirmation link sent!');
+
     }
 
     public function showLoginForm()
@@ -321,7 +339,9 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         // Перенаправляем на главную страницу.
-        return redirect('/')->with('status', 'Ваш аккаунт был успешно удалён.');
+//        return redirect('/')->with('status', 'Ваш аккаунт был успешно удалён.');
+        return redirect('/')->with('status', 'Your account has been successfully deleted.');
+
     }
 
 }

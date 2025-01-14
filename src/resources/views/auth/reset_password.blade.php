@@ -1,42 +1,67 @@
-{{--<h1>Сброс пароля</h1>--}}
+{{--@extends('layouts.minimal')--}}
 
-{{--<form action="{{ route('password.update') }}" method="POST">--}}
-{{--    @csrf--}}
-{{--    <input type="hidden" name="token" value="{{ $token }}">--}}
-{{--    <input type="hidden" name="email" value="{{ $email }}">--}}
-{{--    <label>Новый пароль:</label>--}}
-{{--    <input type="password" name="password" required>--}}
-{{--    @error('password')--}}
-{{--    <p style="color: red;">{{ $message }}</p>--}}
-{{--    @enderror--}}
+{{--@section('title', 'Сброс пароля')--}}
 
-{{--    <label>Подтверждение пароля:</label>--}}
-{{--    <input type="password" name="password_confirmation" required>--}}
+{{--@section('content')--}}
+{{--    <div class="auth-form-container">--}}
+{{--        <h2>Сброс пароля</h2>--}}
 
-{{--    <button type="submit">Сбросить пароль</button>--}}
-{{--</form>--}}
+{{--        <form action="{{ route('password.update') }}" method="POST" class="auth-form">--}}
+{{--            @csrf--}}
+
+{{--            --}}{{-- Токен сброса --}}
+{{--            <input type="hidden" name="token" value="{{ $token }}">--}}
+{{--            <input type="hidden" name="email" value="{{ $email }}">--}}
+
+{{--            --}}{{-- Новый пароль --}}
+{{--            <div class="form-group">--}}
+{{--                <label for="password">Новый пароль</label>--}}
+{{--                <input type="password" name="password" id="password" class="form-input" required>--}}
+{{--            </div>--}}
+
+{{--            @error('password')--}}
+{{--            <div class="alert alert-danger">--}}
+{{--                {{ $message }}--}}
+{{--            </div>--}}
+{{--            @enderror--}}
+
+{{--            --}}{{-- Подтверждение пароля --}}
+{{--            <div class="form-group">--}}
+{{--                <label for="password_confirmation">Подтверждение пароля</label>--}}
+{{--                <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" required>--}}
+{{--            </div>--}}
+
+{{--            <button type="submit" class="btn btn-primary">Сбросить пароль</button>--}}
+{{--        </form>--}}
+
+{{--        <p class="auth-footer-links">--}}
+{{--            <a href="{{ route('login.form') }}">Вернуться к входу</a>--}}
+{{--        </p>--}}
+{{--    </div>--}}
+{{--@endsection--}}
+
 
 
 
 
 @extends('layouts.minimal')
 
-@section('title', 'Сброс пароля')
+@section('title', 'Reset Password')
 
 @section('content')
     <div class="auth-form-container">
-        <h2>Сброс пароля</h2>
+        <h2>Reset Password</h2>
 
         <form action="{{ route('password.update') }}" method="POST" class="auth-form">
             @csrf
 
-            {{-- Токен сброса --}}
+            {{-- Reset Token --}}
             <input type="hidden" name="token" value="{{ $token }}">
             <input type="hidden" name="email" value="{{ $email }}">
 
-            {{-- Новый пароль --}}
+            {{-- New Password --}}
             <div class="form-group">
-                <label for="password">Новый пароль</label>
+                <label for="password">New Password</label>
                 <input type="password" name="password" id="password" class="form-input" required>
             </div>
 
@@ -46,18 +71,17 @@
             </div>
             @enderror
 
-            {{-- Подтверждение пароля --}}
+            {{-- Confirm Password --}}
             <div class="form-group">
-                <label for="password_confirmation">Подтверждение пароля</label>
+                <label for="password_confirmation">Confirm Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Сбросить пароль</button>
+            <button type="submit" class="btn btn-primary">Reset Password</button>
         </form>
 
         <p class="auth-footer-links">
-            <a href="{{ route('login.form') }}">Вернуться к входу</a>
+            <a href="{{ route('login.form') }}">Back to Login</a>
         </p>
     </div>
 @endsection
-
