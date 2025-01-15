@@ -60,6 +60,13 @@ docker exec -it sudo chmod -R 775 src/storage src/bootstrap/cache
 ### 5. Access the Application
 - Open your browser and navigate to [http://localhost:8080](http://localhost:8080) to access the application.
 
+### 6. Configure mailtrap to test email verification
+You have to register in mailtarp (a few clicks using github). 
+After registration chose `Email Testing` -> `chose your inbox`.
+There you can se your credentials, put them into .env file.
+![img.png](img.png). You can chose Code Samples Laravel 9+ and copy that 
+code into .env file `INSTEAD` of the config that's in there now.
+
 ### 6. Manage Containers (can be done from Docker desktop)
 To stop the containers:
 ```bash
