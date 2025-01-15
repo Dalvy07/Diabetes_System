@@ -1,5 +1,7 @@
 # 🩺 Diabetes Management System
 
+## Author: Vladyslav Liulka
+
 ## 📖 Project Overview
 This project is designed to assist in diabetes treatment by providing a seamless platform for **Doctors** and **Patients** to collaborate and manage health data effectively.
 
