@@ -49,7 +49,7 @@ docker-compose up -d --build
 
 ### 3. Make migrations
 ```bash
-docker exec -it laravel_app_test php artisan migrate
+docker exec -it laravel_app php artisan migrate
 ```
 
 ### 4. If there is a write permission error, execute:
