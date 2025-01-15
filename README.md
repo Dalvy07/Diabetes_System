@@ -1,3 +1,24 @@
+# 🩺 Diabetes Management System
+
+## 📖 Project Overview
+This project is designed to assist in diabetes treatment by providing a seamless platform for **Doctors** and **Patients** to collaborate and manage health data effectively.
+
+## ✨ Key Features
+
+### 🔐 User Management
+- ✅ **Registration** with mandatory email verification via **Mailtrap**
+- 🔑 **Authentication**, 🔄 **Password Recovery**, and 📝 **"Remember Me"** functionality
+- 🖊️ Editable **User Profiles** for both **Doctors** and **Patients**
+
+### 👨‍⚕️ Doctor Functionality
+- 🗂️ Manage and monitor **assigned patients**
+- 📋 **Create**, 🔍 **View**, and ✏️ **Edit** personalized **Treatment Plans**
+- 📊 Access and review **Patient Health Data**
+
+### 🧑‍🦱 Patient Functionality
+- 📈 Full **CRUD** operations for **Glucose Measurements**
+- 🏥 View assigned **Treatment Plans** from doctors
+
 # Project Setup Guide
 
 ## Project Description
@@ -24,10 +45,20 @@ Run the following command to build and start the Docker containers:
 docker-compose up -d --build
 ```
 
-### 3. Access the Application
+### 3. Make migrations
+```bash
+docker exec -it laravel_app_test php artisan migrate
+```
+
+### 4. If there is a write permission error, execute:
+```bash
+docker exec -it sudo chmod -R 775 src/storage src/bootstrap/cache
+```
+
+### 5. Access the Application
 - Open your browser and navigate to [http://localhost:8080](http://localhost:8080) to access the application.
 
-### 4. Manage Containers
+### 6. Manage Containers (can be done from Docker desktop)
 To stop the containers:
 ```bash
 docker-compose down
@@ -86,6 +117,4 @@ docker exec -it laravel_app bash
 - Ensure no other services are using ports 8000, 8080, or 3306.
 
 ---
-
-Happy coding!
 
